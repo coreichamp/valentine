@@ -1,257 +1,340 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
-<head>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
     <title>เป็นวาเลนไทน์ของแชมป์นะ?</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #ffe0e6;
-            font-family: 'Sarabun', 'Georgia', sans-serif;
-            overflow: hidden;
-            -webkit-tap-highlight-color: transparent;
-        }
+      body {
+        min-height: 100vh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #ffe0e6;
+        font-family: "Sarabun", "Georgia", sans-serif;
+        overflow: hidden;
+        -webkit-tap-highlight-color: transparent;
+      }
 
-        .container {
-            text-align: center;
-            padding: 1.5rem;
-            width: 100%;
-        }
+      .container {
+        text-align: center;
+        padding: 1.5rem;
+        width: 100%;
+      }
 
-        h1 {
-            font-size: 2rem;
-            color: #c0392b;
-            margin-bottom: 2rem;
-        }
+      .emoji {
+        margin-bottom: 1rem;
+      }
 
-        .buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            align-items: center;
-            min-height: 200px;
-            flex-wrap: wrap;
-        }
+      .emoji img {
+        width: 180px;
+        height: 180px;
+        object-fit: contain;
+        border-radius: 12px;
+      }
 
-        .btn-yes {
-            padding: 1rem 2.5rem;
-            font-size: 1.3rem;
-            background: #e74c3c;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.3s, padding 0.3s, font-size 0.3s;
-            font-family: inherit;
-            z-index: 2;
-        }
+      h1 {
+        font-size: 2rem;
+        color: #c0392b;
+        margin-bottom: 2rem;
+      }
 
-        .btn-yes:hover {
-            background: #c0392b;
-        }
+      .buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        align-items: center;
+        min-height: 200px;
+        flex-wrap: wrap;
+      }
 
-        .btn-no {
-            padding: 1rem 2.5rem;
-            font-size: 1.3rem;
-            background: #95a5a6;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: inherit;
-            transition: transform 0.3s cubic-bezier(.36,.07,.19,.97);
-            z-index: 2;
-        }
+      .btn-yes {
+        padding: 1rem 2.5rem;
+        font-size: 1.3rem;
+        background: #e74c3c;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition:
+          transform 0.3s,
+          padding 0.3s,
+          font-size 0.3s;
+        font-family: inherit;
+        z-index: 2;
+      }
 
-        .btn-no.shaking {
-            animation: tremble 0.3s infinite;
-        }
+      .btn-yes:hover {
+        background: #c0392b;
+      }
 
-        .btn-no.spinning {
-            animation: spinAway 0.5s ease-out;
-        }
+      .btn-no {
+        padding: 1rem 2.5rem;
+        font-size: 1.3rem;
+        background: #95a5a6;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: transform 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+        z-index: 2;
+      }
 
-        @keyframes tremble {
-            0%, 100% { translate: 0 0; }
-            25% { translate: -3px 2px; }
-            50% { translate: 2px -3px; }
-            75% { translate: -2px -1px; }
-        }
+      .btn-no.shaking {
+        animation: tremble 0.3s infinite;
+      }
 
-        @keyframes spinAway {
-            0% { rotate: 0deg; opacity: 1; }
-            100% { rotate: 720deg; opacity: 0.5; }
-        }
+      .btn-no.spinning {
+        animation: spinAway 0.5s ease-out;
+      }
 
-        .celebration {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
+      @keyframes tremble {
+        0%,
+        100% {
+          translate: 0 0;
         }
+        25% {
+          translate: -3px 2px;
+        }
+        50% {
+          translate: 2px -3px;
+        }
+        75% {
+          translate: -2px -1px;
+        }
+      }
 
-        .celebration h1 {
-            font-size: 2.5rem;
-            animation: pulse 0.6s ease-in-out infinite alternate;
+      @keyframes spinAway {
+        0% {
+          rotate: 0deg;
+          opacity: 1;
         }
+        100% {
+          rotate: 720deg;
+          opacity: 0.5;
+        }
+      }
 
-        @keyframes pulse {
-            from { transform: scale(1); }
-            to { transform: scale(1.15); }
-        }
+      .celebration {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+      }
 
-        .hearts {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
-        }
+      .celebration h1 {
+        font-size: 2.5rem;
+        animation: pulse 0.6s ease-in-out infinite alternate;
+      }
 
-        .heart {
-            position: absolute;
-            font-size: 1.8rem;
-            animation: fall linear forwards;
+      @keyframes pulse {
+        from {
+          transform: scale(1);
         }
+        to {
+          transform: scale(1.15);
+        }
+      }
 
-        @keyframes fall {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+      .hearts {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .heart {
+        position: absolute;
+        font-size: 1.8rem;
+        animation: fall linear forwards;
+      }
+
+      @keyframes fall {
+        0% {
+          transform: translateY(-50px) rotate(0deg);
+          opacity: 1;
         }
+        100% {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container" id="question">
-        <h1>เป็นวาเลนไทน์ของแชมป์นะ?</h1>
-        <div class="buttons">
-            <button class="btn-yes" id="yesBtn">ตกลง</button>
-            <button class="btn-no" id="noBtn">ไม่</button>
-        </div>
+      <div class="emoji" id="emoji">
+        <img
+          src="https://media1.tenor.com/m/SU5k1XOLwukAAAAC/cute-milk-and-mocha.gif"
+          alt="please"
+        />
+      </div>
+      <h1>Will you be my valentine?</h1>
+      <div class="buttons">
+        <button class="btn-yes" id="yesBtn">🫰 ตกลง</button>
+        <button class="btn-no" id="noBtn">ไม่หรอก เชอะ</button>
+      </div>
     </div>
 
     <div class="celebration" id="celebration">
-        <h1>เย้! รักนะ!</h1>
+      <div class="emoji">
+        <img
+          src="https://media1.tenor.com/m/o28rADnxEP8AAAAC/milk-and-mocha.gif"
+          alt="love"
+        />
+      </div>
+      <h1>เย้! รักบี๋นะครับบบบบ 😘</h1>
     </div>
 
     <div class="hearts" id="hearts"></div>
 
     <script>
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        let noCount = 0;
-        let yesScale = 1;
+      const noBtn = document.getElementById("noBtn");
+      const yesBtn = document.getElementById("yesBtn");
+      let noCount = 0;
+      let yesScale = 1;
 
-        const noTexts = [
-            'ไม่', 'แน่ใจเหรอ?', 'จริงๆ นะ?', 'คิดใหม่นะ!',
-            'ได้โปรด~', 'กดตกลงเถอะ!', 'อย่าทำแบบนี้กับแชมป์!',
-            'จะร้องไห้แล้วนะ...', 'หัวใจจะสลายแล้ว!', 'กดตกลงอยู่ตรงนั้น!'
-        ];
+      const noTexts = [
+        "ไม่หรอก เชอะ",
+        "แน่ใจเหรอ?",
+        "จริงๆ นะ?",
+        "คิดใหม่นะ!",
+        "ได้โปรด~",
+        "กดตกลงเถอะ!",
+        "อย่าทำแบบนี้กับแชมป์!",
+        "จะร้องไห้แล้วนะ...",
+        "หัวใจจะสลายแล้ว!",
+        "กดตกลงอยู่ตรงนั้น!",
+      ];
 
-        // Works on both mobile (touch) and desktop (hover + click)
-        noBtn.addEventListener('mouseover', runAway);
-        noBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            runAway();
-        });
+      const noGifs = [
+        "https://media1.tenor.com/m/SU5k1XOLwukAAAAC/cute-milk-and-mocha.gif",
+        "https://media1.tenor.com/m/sWXhCC4A2woAAAAC/bubu-bubu-dudu.gif",
+        "https://media1.tenor.com/m/yPZm4Cp6Es0AAAAC/milk-mocha-cry.gif",
+        "https://media1.tenor.com/m/wmyJVSK6eUkAAAAC/dudu-angry.gif",
+        "https://media1.tenor.com/m/mPqAynk-lmgAAAAC/milk-and-mocha-puhleasee.gif",
+        "https://media1.tenor.com/m/cObYmM3IKFsAAAAC/tkthao219-bear.gif",
+        "https://media1.tenor.com/m/hzbQakIKSooAAAAC/heart-broken-sad.gif",
+        "https://media1.tenor.com/m/7zfJK1SOYxoAAAAC/milk-and-mocha.gif",
+        "https://media1.tenor.com/m/hkgavgqx9GkAAAAC/sun-summer.gif",
+        "https://media1.tenor.com/m/BGCYF5odSNIAAAAC/line-bear-dead-bear.gif",
+      ];
 
-        // Shake on nearby touch (mobile "hover" feel)
-        document.addEventListener('touchmove', function(e) {
-            const touch = e.touches[0];
-            const rect = noBtn.getBoundingClientRect();
-            const dist = Math.hypot(
-                touch.clientX - (rect.left + rect.width / 2),
-                touch.clientY - (rect.top + rect.height / 2)
-            );
-            if (dist < 120) {
-                noBtn.classList.add('shaking');
-            } else {
-                noBtn.classList.remove('shaking');
-            }
-        });
+      const emojiEl = document.getElementById("emoji");
 
-        // Shake on mouse proximity (desktop)
-        document.addEventListener('mousemove', function(e) {
-            const rect = noBtn.getBoundingClientRect();
-            const dist = Math.hypot(
-                e.clientX - (rect.left + rect.width / 2),
-                e.clientY - (rect.top + rect.height / 2)
-            );
-            if (dist < 150) {
-                noBtn.classList.add('shaking');
-            } else {
-                noBtn.classList.remove('shaking');
-            }
-        });
+      // Works on both mobile (touch) and desktop (hover + click)
+      noBtn.addEventListener("mouseover", runAway);
+      noBtn.addEventListener("touchstart", function (e) {
+        e.preventDefault();
+        runAway();
+      });
 
-        yesBtn.addEventListener('click', sayYes);
-        yesBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            sayYes();
-        });
-
-        function runAway() {
-            noCount++;
-
-            // Change button text
-            noBtn.textContent = noTexts[Math.min(noCount, noTexts.length - 1)];
-
-            // Spin away animation
-            noBtn.classList.remove('shaking');
-            noBtn.classList.add('spinning');
-            setTimeout(() => noBtn.classList.remove('spinning'), 500);
-
-            // "Yes" button grows each time "No" is attempted
-            yesScale += 0.18;
-            yesBtn.style.transform = 'scale(' + yesScale + ')';
-
-
-            // Move "No" to a random spot
-            const pad = 60;
-            const maxX = window.innerWidth - pad;
-            const maxY = window.innerHeight - pad;
-            const x = pad / 2 + Math.random() * (maxX - pad);
-            const y = pad / 2 + Math.random() * (maxY - pad);
-            noBtn.style.position = 'fixed';
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+      // Shake on nearby touch (mobile "hover" feel)
+      document.addEventListener("touchmove", function (e) {
+        const touch = e.touches[0];
+        const rect = noBtn.getBoundingClientRect();
+        const dist = Math.hypot(
+          touch.clientX - (rect.left + rect.width / 2),
+          touch.clientY - (rect.top + rect.height / 2),
+        );
+        if (dist < 120) {
+          noBtn.classList.add("shaking");
+        } else {
+          noBtn.classList.remove("shaking");
         }
+      });
 
-        function sayYes() {
-            document.getElementById('question').style.display = 'none';
-            document.getElementById('celebration').style.display = 'flex';
-            spawnHearts();
+      // Shake on mouse proximity (desktop)
+      document.addEventListener("mousemove", function (e) {
+        const rect = noBtn.getBoundingClientRect();
+        const dist = Math.hypot(
+          e.clientX - (rect.left + rect.width / 2),
+          e.clientY - (rect.top + rect.height / 2),
+        );
+        if (dist < 150) {
+          noBtn.classList.add("shaking");
+        } else {
+          noBtn.classList.remove("shaking");
         }
+      });
 
-        function spawnHearts() {
-            const container = document.getElementById('hearts');
-            const emojis = ['❤️', '💕', '💖', '💗', '💘', '💝'];
-            for (let i = 0; i < 40; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('span');
-                    heart.className = 'heart';
-                    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                    heart.style.left = Math.random() * 100 + '%';
-                    heart.style.animationDuration = (2 + Math.random() * 3) + 's';
-                    container.appendChild(heart);
-                    setTimeout(() => heart.remove(), 5000);
-                }, i * 150);
-            }
+      yesBtn.addEventListener("click", sayYes);
+      yesBtn.addEventListener("touchstart", function (e) {
+        e.preventDefault();
+        sayYes();
+      });
+
+      function runAway() {
+        noCount++;
+
+        // Change button text and emoji
+        noBtn.textContent = noTexts[Math.min(noCount, noTexts.length - 1)];
+        emojiEl.innerHTML =
+          '<img src="' +
+          noGifs[Math.min(noCount, noGifs.length - 1)] +
+          '" alt="please">';
+
+        // Spin away animation
+        noBtn.classList.remove("shaking");
+        noBtn.classList.add("spinning");
+        setTimeout(() => noBtn.classList.remove("spinning"), 500);
+
+        // "Yes" button grows each time "No" is attempted
+        yesScale += 0.18;
+        yesBtn.style.transform = "scale(" + yesScale + ")";
+
+        // Move "No" to a random spot
+        const pad = 60;
+        const maxX = window.innerWidth - pad;
+        const maxY = window.innerHeight - pad;
+        const x = pad / 2 + Math.random() * (maxX - pad);
+        const y = pad / 2 + Math.random() * (maxY - pad);
+        noBtn.style.position = "fixed";
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+      }
+
+      function sayYes() {
+        document.getElementById("question").style.display = "none";
+        document.getElementById("celebration").style.display = "flex";
+        spawnHearts();
+      }
+
+      function spawnHearts() {
+        const container = document.getElementById("hearts");
+        const emojis = ["❤️", "💕", "💖", "💗", "💘", "💝"];
+        for (let i = 0; i < 40; i++) {
+          setTimeout(() => {
+            const heart = document.createElement("span");
+            heart.className = "heart";
+            heart.textContent =
+              emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 100 + "%";
+            heart.style.animationDuration = 2 + Math.random() * 3 + "s";
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+          }, i * 150);
         }
+      }
     </script>
-</body>
+  </body>
 </html>
