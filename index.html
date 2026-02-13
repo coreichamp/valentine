@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Will You Be My Valentine?</title>
+    <title>เป็นวาเลนไทน์ของแชมป์นะ?</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +20,7 @@
             align-items: center;
             justify-content: center;
             background: #ffe0e6;
-            font-family: 'Georgia', serif;
+            font-family: 'Sarabun', 'Georgia', sans-serif;
             overflow: hidden;
             -webkit-tap-highlight-color: transparent;
         }
@@ -71,8 +72,28 @@
             border-radius: 50px;
             cursor: pointer;
             font-family: inherit;
-            transition: transform 0.2s, padding 0.2s, font-size 0.2s;
+            transition: transform 0.3s cubic-bezier(.36,.07,.19,.97);
             z-index: 2;
+        }
+
+        .btn-no.shaking {
+            animation: tremble 0.3s infinite;
+        }
+
+        .btn-no.spinning {
+            animation: spinAway 0.5s ease-out;
+        }
+
+        @keyframes tremble {
+            0%, 100% { translate: 0 0; }
+            25% { translate: -3px 2px; }
+            50% { translate: 2px -3px; }
+            75% { translate: -2px -1px; }
+        }
+
+        @keyframes spinAway {
+            0% { rotate: 0deg; opacity: 1; }
+            100% { rotate: 720deg; opacity: 0.5; }
         }
 
         .celebration {
@@ -116,15 +137,15 @@
 </head>
 <body>
     <div class="container" id="question">
-        <h1>Will You Be My Valentine?</h1>
+        <h1>เป็นวาเลนไทน์ของแชมป์นะ?</h1>
         <div class="buttons">
-            <button class="btn-yes" id="yesBtn">Yes</button>
-            <button class="btn-no" id="noBtn">No</button>
+            <button class="btn-yes" id="yesBtn">ตกลง</button>
+            <button class="btn-no" id="noBtn">ไม่</button>
         </div>
     </div>
 
     <div class="celebration" id="celebration">
-        <h1>Yay! I love you!</h1>
+        <h1>เย้! รักนะ!</h1>
     </div>
 
     <div class="hearts" id="hearts"></div>
@@ -135,11 +156,46 @@
         let noCount = 0;
         let yesScale = 1;
 
+        const noTexts = [
+            'ไม่', 'แน่ใจเหรอ?', 'จริงๆ นะ?', 'คิดใหม่นะ!',
+            'ได้โปรด~', 'กดตกลงเถอะ!', 'อย่าทำแบบนี้กับแชมป์!',
+            'จะร้องไห้แล้วนะ...', 'หัวใจจะสลายแล้ว!', 'กดตกลงอยู่ตรงนั้น!'
+        ];
+
         // Works on both mobile (touch) and desktop (hover + click)
         noBtn.addEventListener('mouseover', runAway);
         noBtn.addEventListener('touchstart', function(e) {
             e.preventDefault();
             runAway();
+        });
+
+        // Shake on nearby touch (mobile "hover" feel)
+        document.addEventListener('touchmove', function(e) {
+            const touch = e.touches[0];
+            const rect = noBtn.getBoundingClientRect();
+            const dist = Math.hypot(
+                touch.clientX - (rect.left + rect.width / 2),
+                touch.clientY - (rect.top + rect.height / 2)
+            );
+            if (dist < 120) {
+                noBtn.classList.add('shaking');
+            } else {
+                noBtn.classList.remove('shaking');
+            }
+        });
+
+        // Shake on mouse proximity (desktop)
+        document.addEventListener('mousemove', function(e) {
+            const rect = noBtn.getBoundingClientRect();
+            const dist = Math.hypot(
+                e.clientX - (rect.left + rect.width / 2),
+                e.clientY - (rect.top + rect.height / 2)
+            );
+            if (dist < 150) {
+                noBtn.classList.add('shaking');
+            } else {
+                noBtn.classList.remove('shaking');
+            }
         });
 
         yesBtn.addEventListener('click', sayYes);
@@ -151,13 +207,18 @@
         function runAway() {
             noCount++;
 
+            // Change button text
+            noBtn.textContent = noTexts[Math.min(noCount, noTexts.length - 1)];
+
+            // Spin away animation
+            noBtn.classList.remove('shaking');
+            noBtn.classList.add('spinning');
+            setTimeout(() => noBtn.classList.remove('spinning'), 500);
+
             // "Yes" button grows each time "No" is attempted
-            yesScale += 0.15;
+            yesScale += 0.18;
             yesBtn.style.transform = 'scale(' + yesScale + ')';
 
-            // "No" button shrinks
-            const shrink = Math.max(0.4, 1 - noCount * 0.1);
-            noBtn.style.transform = 'scale(' + shrink + ')';
 
             // Move "No" to a random spot
             const pad = 60;
