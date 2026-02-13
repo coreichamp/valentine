@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffe0e6;
+            font-family: 'Georgia', serif;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .container {
+            text-align: center;
+            padding: 1.5rem;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #c0392b;
+            margin-bottom: 2rem;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            flex-wrap: wrap;
+        }
+
+        .btn-yes {
+            padding: 1rem 2.5rem;
+            font-size: 1.3rem;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, padding 0.3s, font-size 0.3s;
+            font-family: inherit;
+            z-index: 2;
+        }
+
+        .btn-yes:hover {
+            background: #c0392b;
+        }
+
+        .btn-no {
+            padding: 1rem 2.5rem;
+            font-size: 1.3rem;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: transform 0.2s, padding 0.2s, font-size 0.2s;
+            z-index: 2;
+        }
+
+        .celebration {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .celebration h1 {
+            font-size: 2.5rem;
+            animation: pulse 0.6s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+        }
+
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 1.8rem;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="question">
+        <h1>Will You Be My Valentine?</h1>
+        <div class="buttons">
+            <button class="btn-yes" id="yesBtn">Yes</button>
+            <button class="btn-no" id="noBtn">No</button>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration">
+        <h1>Yay! I love you!</h1>
+    </div>
+
+    <div class="hearts" id="hearts"></div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        let noCount = 0;
+        let yesScale = 1;
+
+        // Works on both mobile (touch) and desktop (hover + click)
+        noBtn.addEventListener('mouseover', runAway);
+        noBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            runAway();
+        });
+
+        yesBtn.addEventListener('click', sayYes);
+        yesBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            sayYes();
+        });
+
+        function runAway() {
+            noCount++;
+
+            // "Yes" button grows each time "No" is attempted
+            yesScale += 0.15;
+            yesBtn.style.transform = 'scale(' + yesScale + ')';
+
+            // "No" button shrinks
+            const shrink = Math.max(0.4, 1 - noCount * 0.1);
+            noBtn.style.transform = 'scale(' + shrink + ')';
+
+            // Move "No" to a random spot
+            const pad = 60;
+            const maxX = window.innerWidth - pad;
+            const maxY = window.innerHeight - pad;
+            const x = pad / 2 + Math.random() * (maxX - pad);
+            const y = pad / 2 + Math.random() * (maxY - pad);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function sayYes() {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('celebration').style.display = 'flex';
+            spawnHearts();
+        }
+
+        function spawnHearts() {
+            const container = document.getElementById('hearts');
+            const emojis = ['❤️', '💕', '💖', '💗', '💘', '💝'];
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('span');
+                    heart.className = 'heart';
+                    heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    container.appendChild(heart);
+                    setTimeout(() => heart.remove(), 5000);
+                }, i * 150);
+            }
+        }
+    </script>
+</body>
+</html>
